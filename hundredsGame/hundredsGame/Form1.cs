@@ -16,5 +16,10 @@ namespace hundredsGame
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            bouncyball hundredBall1 = new bouncyball(Brushes.Black, 20, 20, 20, 20, 2, 2, true);
+        }
     }
 }
