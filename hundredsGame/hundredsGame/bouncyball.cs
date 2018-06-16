@@ -74,7 +74,17 @@ namespace hundredsGame
             }
         }
         
-
+        public bool Intersects(int x, int y, int radius)
+        {
+            int a = (this.x + this.width / 2)- x + radius;
+            int b = (this.y + this.height / 2) - y + radius;
+            double c = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
+            if(width / 2 + radius > c)
+            {
+                return true;
+            }
+            return false;
+        }
 
 
 
