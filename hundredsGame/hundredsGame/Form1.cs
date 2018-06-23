@@ -27,6 +27,8 @@ namespace hundredsGame
         int speedUp = 0;
         int ball1w = 20;
         int ball1h = 20;
+        int tmpxSpeed = 0;
+        int tmpySpeed = 0;
         Rectangle rectangle = new Rectangle(0, 0, 2, 2);
 
         public Form1()
@@ -41,7 +43,7 @@ namespace hundredsGame
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 25; i++)
             {
                 balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, 2, 2, true));
             }
@@ -54,9 +56,10 @@ namespace hundredsGame
             mainPictureBox.Image = canvas;
             gfx.Clear(BackColor);
 
-            foreach (bouncyball ball in balls)
+            for(int i = 0; i < balls.Count; i++)
+            //foreach (bouncyball ball in balls)
             {
-
+                bouncyball ball = balls[i];
                 ball.Draw(gfx);
                 ball.Move(cw, ch, ball1move);
                 if (ball.Intersects(rectangle.X, rectangle.Y, 0))
@@ -65,32 +68,48 @@ namespace hundredsGame
                     ball.width += 1;
                     ball.height += 1;
                 }
-
-                foreach (bouncyball ball2 in balls)
+                if(ball.Radius - 10 == 101)
                 {
+                    gameRunner.Enabled = false;
+                }
 
+                //foreach (bouncyball ball2 in balls)
+                for (int j = 0; j < balls.Count; j++)
+                {
+                    bouncyball ball2 = balls[j];
                     if (ball.Intersects(rectangle.X, rectangle.Y, 0))
                     {
-                        if (ball != ball2 && ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
+                        if (ball != ball2 && ball.HitBox.IntersectsWith(ball2.HitBox))
                         {
-                            gameRunner.Enabled = false;
+                            if ( ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
+                            {
+
+                                gameRunner.Enabled = false;
+                            }
                         }
 
                     }
-                    if (ball != ball2 && ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
+                    if (ball != ball2 && ball.HitBox.IntersectsWith(ball2.HitBox))
                     {
-                        ball.xSpeed *= -1;
-                        ball.ySpeed *= -1;
-                        ball2.xSpeed *= -1;
-                        ball2.ySpeed *= -1;
-                        speedUp++;
-                        if(speedUp == 1000)
+                        if (ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
                         {
-                            ball.xSpeed += 1;
-                            ball.ySpeed += 1;
-                            ball2.xSpeed += 1;
-                            ball2.ySpeed += 1;
-                            speedUp = 0;
+                            tmpxSpeed = ball.xSpeed;
+                            ball.xSpeed = ball2.xSpeed;
+                            ball2.xSpeed = tmpxSpeed;
+
+                            tmpySpeed = ball.ySpeed;
+                            ball.ySpeed = ball2.ySpeed;
+                            ball2.ySpeed = tmpySpeed;
+
+                            //speedUp++;
+                            //if(speedUp == 1000)
+                            //{
+                            //    ball.xSpeed += 1;
+                            //    ball.ySpeed += 1;
+                            //    ball2.xSpeed += 1;
+                            //    ball2.ySpeed += 1;
+                            //    speedUp = 0;
+                            //}
                         }
                     }
                 }

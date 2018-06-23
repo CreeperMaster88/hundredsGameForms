@@ -19,7 +19,7 @@ namespace hundredsGame
         public int y;
         public int ySpeed;
         public int width;
-        public int height;
+        public int height; 
         public Rectangle HitBox
         {
             get
@@ -28,6 +28,13 @@ namespace hundredsGame
             }
         }
 
+        public int Radius
+        {
+            get
+            {
+                return width / 2;
+            }
+        }
 
 
 
@@ -76,10 +83,10 @@ namespace hundredsGame
         
         public bool Intersects(int x, int y, int radius)
         {
-            int a = (this.x + this.width / 2)- x + radius;
-            int b = (this.y + this.height / 2) - y + radius;
+            int a = (this.x + Radius)- x + radius;
+            int b = (this.y + Radius) - y + radius;
             double c = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
-            if(width / 2 + radius > c)
+            if(Radius + radius > c)
             {
                 return true;
             }
@@ -91,7 +98,9 @@ namespace hundredsGame
 
         public void Draw(Graphics gfx)
         {
-            gfx.FillEllipse(color, HitBox);
+            gfx.FillEllipse(color, x, y, Radius * 2, Radius * 2);
+            gfx.DrawString($"{Radius - 10}", new Font("Arial", 12.75f), Brushes.Black, new Point(HitBox.Left + Radius, HitBox.Bottom - Radius));
+            
 
         }
     }
