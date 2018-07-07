@@ -35,7 +35,7 @@ namespace hundredsGame
                 return width / 2;
             }
         }
-
+        Font font;
 
 
 
@@ -51,6 +51,7 @@ namespace hundredsGame
             this.ySpeed = ySpeed;
             this.color = color;
 
+            font = new Font("Arial", 12.75f);
         }
         public void Move(int ClientWidth, int ClientHeight, bool isMovable)
         {
@@ -98,8 +99,9 @@ namespace hundredsGame
 
         public void Draw(Graphics gfx)
         {
-            gfx.FillEllipse(color, x, y, Radius * 2, Radius * 2);
-            gfx.DrawString($"{Radius - 10}", new Font("Arial", 12.75f), Brushes.Black, new Point(HitBox.Left + Radius, HitBox.Bottom - Radius));
+            gfx.FillEllipse(color, x, y, Radius * 2, Radius * 2);                        
+
+            gfx.DrawString($"{Radius - 10}", font, Brushes.Black, new Point(HitBox.Left + Radius - (int)(gfx.MeasureString($"{Radius -10}", font).Width / 2), HitBox.Bottom - Radius - (int)(gfx.MeasureString($"{Radius - 10}", font).Height / 2)));
             
 
         }

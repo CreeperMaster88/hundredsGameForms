@@ -23,10 +23,12 @@ namespace hundredsGame
         Random ballPlacement = new Random();
         bool ball1move = true;
         int mouseX;
+        bool reset = false;
         int mouseY;
         int speedUp = 0;
         int ball1w = 20;
         int ball1h = 20;
+        int ballsCount = 4;
         int tmpxSpeed = 0;
         int tmpySpeed = 0;
         Rectangle rectangle = new Rectangle(0, 0, 2, 2);
@@ -43,10 +45,13 @@ namespace hundredsGame
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < ballsCount; i++)
             {
-                balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, 2, 2, true));
+               
+
+               balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, ballPlacement.Next(1, 5), ballPlacement.Next(1,5), true));
             }
+           
 
         }
 
@@ -59,57 +64,70 @@ namespace hundredsGame
             for(int i = 0; i < balls.Count; i++)
             //foreach (bouncyball ball in balls)
             {
+                bool isGrowing = false;
+
                 bouncyball ball = balls[i];
                 ball.Draw(gfx);
                 ball.Move(cw, ch, ball1move);
                 if (ball.Intersects(rectangle.X, rectangle.Y, 0))
                 {
-                   
+                    isGrowing = true;
                     ball.width += 1;
                     ball.height += 1;
                 }
                 if(ball.Radius - 10 == 101)
                 {
-                    gameRunner.Enabled = false;
+                    balls.Clear();
+                    ballsCount += 2;
+                    //all balls must add to 100 not just one
+                    for (int k = 0; i < ballsCount; i++)
+                    {
+
+
+                        balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, ballPlacement.Next(1, 5), ballPlacement.Next(1, 5), true));
+                    }
                 }
 
                 //foreach (bouncyball ball2 in balls)
                 for (int j = 0; j < balls.Count; j++)
                 {
                     bouncyball ball2 = balls[j];
-                    if (ball.Intersects(rectangle.X, rectangle.Y, 0))
+                    if (isGrowing)
                     {
                         if (ball != ball2 && ball.HitBox.IntersectsWith(ball2.HitBox))
                         {
-                            if ( ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
+                            if (ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
                             {
-
                                 gameRunner.Enabled = false;
+                                restartButton.Enabled = true;
+                                restartButton.Visible = true;
                             }
                         }
-
                     }
-                    if (ball != ball2 && ball.HitBox.IntersectsWith(ball2.HitBox))
+                    else
                     {
-                        if (ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
+                        if (ball != ball2 && ball.HitBox.IntersectsWith(ball2.HitBox))
                         {
-                            tmpxSpeed = ball.xSpeed;
-                            ball.xSpeed = ball2.xSpeed;
-                            ball2.xSpeed = tmpxSpeed;
+                            if (ball.Intersects(ball2.x, ball2.y, ball2.width / 2))
+                            {
+                                tmpxSpeed = ball.xSpeed;
+                                ball.xSpeed = ball2.xSpeed;
+                                ball2.xSpeed = tmpxSpeed;
 
-                            tmpySpeed = ball.ySpeed;
-                            ball.ySpeed = ball2.ySpeed;
-                            ball2.ySpeed = tmpySpeed;
+                                tmpySpeed = ball.ySpeed;
+                                ball.ySpeed = ball2.ySpeed;
+                                ball2.ySpeed = tmpySpeed;
 
-                            //speedUp++;
-                            //if(speedUp == 1000)
-                            //{
-                            //    ball.xSpeed += 1;
-                            //    ball.ySpeed += 1;
-                            //    ball2.xSpeed += 1;
-                            //    ball2.ySpeed += 1;
-                            //    speedUp = 0;
-                            //}
+                                //speedUp++;
+                                //if(speedUp == 1000)
+                                //{
+                                //    ball.xSpeed += 1;
+                                //    ball.ySpeed += 1;
+                                //    ball2.xSpeed += 1;
+                                //    ball2.ySpeed += 1;
+                                //    speedUp = 0;
+                                //}
+                            }
                         }
                     }
                 }
@@ -119,7 +137,7 @@ namespace hundredsGame
                 }
                 if (ball.x + ball.width > ClientSize.Width)
                 {
-                    ball.x -= 20; ;
+                    ball.x -= 20;
                 }
                 if (ball.y < 0)
                 {
@@ -148,6 +166,40 @@ namespace hundredsGame
             rectangle.X = e.X;
             rectangle.Y = e.Y;
 
+        }
+
+        private void resetButtonFlash_Tick(object sender, EventArgs e)
+        {
+            
+            restartButton.BackColor = Color.Lime;
+            restartButton.ForeColor = Color.Red;
+            
+        }
+
+        private void restartButton_Click(object sender, EventArgs e)
+        {
+            restartButton.Enabled = false;
+            restartButton.Visible = false;
+            gameRunner.Enabled = true;
+            balls.Clear();
+            for (int i = 0; i < ballsCount; i++)
+            {
+                
+
+                balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, ballPlacement.Next(1, 5), ballPlacement.Next(1, 5), true));
+            }
+        }
+
+        private void resetbuttonsflash_Tick(object sender, EventArgs e)
+        {
+            restartButton.BackColor = Color.Red;
+            restartButton.ForeColor = Color.Lime;
+        }
+
+        private void resetbuttonflashagainSUCC_Tick(object sender, EventArgs e)
+        {
+            restartButton.BackColor = Color.Yellow;
+            restartButton.ForeColor = Color.Blue;
         }
     }
 }
