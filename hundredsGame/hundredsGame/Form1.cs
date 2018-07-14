@@ -46,16 +46,12 @@ namespace hundredsGame
 
         private void Form1_Load(object sender, EventArgs e)
         {
-             soundPlayer = new SoundPlayer();
+            soundPlayer = new SoundPlayer();
             soundPlayer.SoundLocation = "oof.wav";
             for (int i = 0; i < ballsCount; i++)
             {
-               
-
-               balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, ballPlacement.Next(1, 5), ballPlacement.Next(1,5), true));
+              balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, ballPlacement.Next(1, 5), ballPlacement.Next(1,5), true));
             }
-           
-
         }
 
         private void gameRunner_Tick(object sender, EventArgs e)
@@ -82,7 +78,7 @@ namespace hundredsGame
                 if(totalScore / 2 == 101)
                 {
                     balls.Clear();
-                    ballsCount += 12;
+                    ballsCount += 6;
                     //all balls must add to 100 not just one
                     for (int k = 0; i < ballsCount; i++)
                     {
@@ -153,6 +149,14 @@ namespace hundredsGame
                     ball.y -= 20;
                 }
             }
+            if(ballsCount >= 30)
+            {
+                youWin.Visible = true;
+                gameRunner.Enabled = false;
+                restartButton.Enabled = true;
+                restartButton.Visible = true;
+                ballsCount = 8;
+            }
             totalLabel.Text = ($"{totalScore / 2}");
         }
 
@@ -185,6 +189,7 @@ namespace hundredsGame
         {
             restartButton.Enabled = false;
             restartButton.Visible = false;
+            youWin.Visible = false;
             gameRunner.Enabled = true;
             balls.Clear();
             for (int i = 0; i < ballsCount / 2; i++)
@@ -210,6 +215,11 @@ namespace hundredsGame
         }
 
         private void totalLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void youWin_Click(object sender, EventArgs e)
         {
 
         }

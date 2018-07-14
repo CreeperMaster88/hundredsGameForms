@@ -36,6 +36,7 @@
             this.resetbuttonsflash = new System.Windows.Forms.Timer(this.components);
             this.resetbuttonflashagainSUCC = new System.Windows.Forms.Timer(this.components);
             this.totalLabel = new System.Windows.Forms.Label();
+            this.youWin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,12 +102,28 @@
             this.totalLabel.Text = "0";
             this.totalLabel.Click += new System.EventHandler(this.totalLabel_Click);
             // 
+            // youWin
+            // 
+            this.youWin.AutoSize = true;
+            this.youWin.BackColor = System.Drawing.Color.Aqua;
+            this.youWin.Enabled = false;
+            this.youWin.Font = new System.Drawing.Font("Quartz MS", 320F);
+            this.youWin.ForeColor = System.Drawing.Color.Yellow;
+            this.youWin.Location = new System.Drawing.Point(-1, 0);
+            this.youWin.Name = "youWin";
+            this.youWin.Size = new System.Drawing.Size(1930, 514);
+            this.youWin.TabIndex = 3;
+            this.youWin.Text = "YOU WIN";
+            this.youWin.Visible = false;
+            this.youWin.Click += new System.EventHandler(this.youWin_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(1884, 1061);
+            this.Controls.Add(this.youWin);
             this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.mainPictureBox);
@@ -130,6 +147,7 @@
         private System.Windows.Forms.Timer resetbuttonsflash;
         private System.Windows.Forms.Timer resetbuttonflashagainSUCC;
         private System.Windows.Forms.Label totalLabel;
+        private System.Windows.Forms.Label youWin;
     }
 }
 
