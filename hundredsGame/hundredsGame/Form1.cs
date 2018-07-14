@@ -18,8 +18,10 @@ namespace hundredsGame
         Graphics gfx;
         List<bouncyball> balls = new List<bouncyball>();
         //bouncyball ball;
+        SoundPlayer soundPlayer;
         int cw;
         int ch;
+        int totalScore = 0;
         Random ballPlacement = new Random();
         bool ball1move = true;
         int mouseX;
@@ -44,7 +46,8 @@ namespace hundredsGame
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+             soundPlayer = new SoundPlayer();
+            soundPlayer.SoundLocation = "oof.wav";
             for (int i = 0; i < ballsCount; i++)
             {
                
@@ -74,11 +77,12 @@ namespace hundredsGame
                     isGrowing = true;
                     ball.width += 1;
                     ball.height += 1;
+                    totalScore += 1;
                 }
-                if(ball.Radius - 10 == 101)
+                if(totalScore / 2 == 101)
                 {
                     balls.Clear();
-                    ballsCount += 2;
+                    ballsCount += 12;
                     //all balls must add to 100 not just one
                     for (int k = 0; i < ballsCount; i++)
                     {
@@ -86,6 +90,7 @@ namespace hundredsGame
 
                         balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, ballPlacement.Next(1, 5), ballPlacement.Next(1, 5), true));
                     }
+                    totalScore = 0;
                 }
 
                 //foreach (bouncyball ball2 in balls)
@@ -117,7 +122,7 @@ namespace hundredsGame
                                 tmpySpeed = ball.ySpeed;
                                 ball.ySpeed = ball2.ySpeed;
                                 ball2.ySpeed = tmpySpeed;
-
+                                soundPlayer.Play();
                                 //speedUp++;
                                 //if(speedUp == 1000)
                                 //{
@@ -148,7 +153,7 @@ namespace hundredsGame
                     ball.y -= 20;
                 }
             }
-
+            totalLabel.Text = ($"{totalScore / 2}");
         }
 
 
@@ -182,12 +187,14 @@ namespace hundredsGame
             restartButton.Visible = false;
             gameRunner.Enabled = true;
             balls.Clear();
-            for (int i = 0; i < ballsCount; i++)
+            for (int i = 0; i < ballsCount / 2; i++)
             {
                 
 
                 balls.Add(new bouncyball(Brushes.White, ballPlacement.Next(10, 1500), ballPlacement.Next(10, 800), ball1w, ball1h, ballPlacement.Next(1, 5), ballPlacement.Next(1, 5), true));
             }
+            ballsCount /= 2;
+            totalScore = 0;
         }
 
         private void resetbuttonsflash_Tick(object sender, EventArgs e)
@@ -200,6 +207,11 @@ namespace hundredsGame
         {
             restartButton.BackColor = Color.Yellow;
             restartButton.ForeColor = Color.Blue;
+        }
+
+        private void totalLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

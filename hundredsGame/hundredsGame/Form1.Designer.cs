@@ -35,6 +35,7 @@
             this.resetButtonFlash = new System.Windows.Forms.Timer(this.components);
             this.resetbuttonsflash = new System.Windows.Forms.Timer(this.components);
             this.resetbuttonflashagainSUCC = new System.Windows.Forms.Timer(this.components);
+            this.totalLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,12 +91,23 @@
             this.resetbuttonflashagainSUCC.Interval = 500;
             this.resetbuttonflashagainSUCC.Tick += new System.EventHandler(this.resetbuttonflashagainSUCC_Tick);
             // 
+            // totalLabel
+            // 
+            this.totalLabel.AutoSize = true;
+            this.totalLabel.Location = new System.Drawing.Point(1540, 13);
+            this.totalLabel.Name = "totalLabel";
+            this.totalLabel.Size = new System.Drawing.Size(13, 13);
+            this.totalLabel.TabIndex = 2;
+            this.totalLabel.Text = "0";
+            this.totalLabel.Click += new System.EventHandler(this.totalLabel_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(1884, 1061);
+            this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.mainPictureBox);
             this.Cursor = System.Windows.Forms.Cursors.Cross;
@@ -105,6 +117,7 @@
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -116,6 +129,7 @@
         private System.Windows.Forms.Timer resetButtonFlash;
         private System.Windows.Forms.Timer resetbuttonsflash;
         private System.Windows.Forms.Timer resetbuttonflashagainSUCC;
+        private System.Windows.Forms.Label totalLabel;
     }
 }
 
